@@ -1,4 +1,4 @@
-package com.tienda.Controllers;
+package com.tienda.animoda.Controllers;
 
 import java.util.List;
 
@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.tienda.Repositories.UsuarioRespository;
-
-
-import com.tienda.Entities.Usuario;
+import com.tienda.animoda.Entities.Usuario;
+import com.tienda.animoda.Repositories.UsuarioRespository;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -29,6 +27,8 @@ public class UsuarioController {
         return usuarioRespository.findAll();
     }
 
+    
+
     @GetMapping("/{id}")
     public Usuario getPUsuarioById(@PathVariable Long id){
         return usuarioRespository.findById(id)
@@ -40,7 +40,7 @@ public class UsuarioController {
         return usuarioRespository.save(usuario);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public Usuario updateUsuario(@PathVariable Long id, @RequestBody Usuario usuarioNuevo){
             Usuario usuario= usuarioRespository.findById(id)
             .orElseThrow(() -> new RuntimeException("No se encontró el usuario con el ID: " + id));

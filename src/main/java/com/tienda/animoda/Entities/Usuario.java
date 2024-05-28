@@ -1,4 +1,4 @@
-package com.tienda.Entities;
+package com.tienda.animoda.Entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
