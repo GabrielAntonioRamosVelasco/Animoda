@@ -13,7 +13,10 @@ public class Inventario {
     private String nombre;
     private int cantidad;
     private double precio;
+    private String descripcion;
+    private String imagen; // Esto podría ser una URL o un base64 string para la imagen
 
+    // Getters y Setters
     public Long getId_producto() {
         return id_producto;
     }
@@ -38,5 +41,16 @@ public class Inventario {
     public void setPrecio(double precio) {
         this.precio = precio;
     }
-    
+    public String getDescripcion() {
+        return descripcion;
+    }
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+    public String getImagen() {
+        return imagen;
+    }
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
+    }
 }
