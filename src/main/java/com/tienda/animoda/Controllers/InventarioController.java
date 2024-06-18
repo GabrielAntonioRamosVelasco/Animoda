@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tienda.animoda.Entities.Inventario;
@@ -34,6 +35,12 @@ public class InventarioController {
         return inventarioRepository.findById(id_producto)
                 .orElseThrow(() -> new RuntimeException("No se encontró el producto con el ID: " + id_producto));
     }
+
+    @GetMapping("/search")
+    public List<Inventario> searchProducts(@RequestParam String keyword) {
+        return inventarioRepository.findByKeyword(keyword);
+    }
+
 
     @PostMapping
     public Inventario createProduct(@RequestBody Inventario inventario) {
@@ -60,4 +67,5 @@ public class InventarioController {
         inventarioRepository.delete(producto);
         return "Producto eliminado correctamente";
     }
+    
 }

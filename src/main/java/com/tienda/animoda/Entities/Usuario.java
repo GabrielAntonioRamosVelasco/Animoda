@@ -12,6 +12,7 @@ public class Usuario {
     private Long id_user;
     private String nombre;
     private String correo;
+    private String contra;
     
     
     public Long getId_user() {
@@ -31,6 +32,14 @@ public class Usuario {
     }
     public void setCorreo(String correo) {
         this.correo = correo;
+    }
+
+    public String getContra() {
+        return contra;
+    }
+
+    public void setContra(String contra) {
+        this.contra = contra;
     }
 
 }
