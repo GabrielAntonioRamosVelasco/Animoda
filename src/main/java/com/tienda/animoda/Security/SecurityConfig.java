@@ -8,8 +8,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import static org.springframework.security.config.Customizer.withDefaults;
 
+import com.tienda.animoda.Jwt.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 
 
@@ -17,6 +17,9 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final AuthenticationProvider authProvider;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
@@ -26,10 +29,14 @@ public class SecurityConfig {
             .disable())
         .authorizeHttpRequests(authRequest ->
           authRequest
-            .requestMatchers("/auth/**", "/inventario/**").permitAll()
+            .requestMatchers("/auth/**").permitAll()
             .anyRequest().authenticated()
             )
-        .formLogin(withDefaults())
-        .build();
+        .sessionManagement(sessionManager->
+                sessionManager 
+                  .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authenticationProvider(authProvider)
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+            .build();
     }
 }

@@ -18,19 +18,45 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @Component
+@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+
+    private final JwtService jwtService;
+    private final UserDetailsService userDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-
+       
         final String token = getTokenFromRequest(request);
+        final String username;
 
-        if (token == null) {
+        if (token==null)
+        {
             filterChain.doFilter(request, response);
             return;
-            
         }
+
+        username=jwtService.getUsernameFromToken(token);
+
+        if (username!=null && SecurityContextHolder.getContext().getAuthentication()==null)
+        {
+            UserDetails userDetails=userDetailsService.loadUserByUsername(username);
+
+            if (jwtService.isTokenValid(token, userDetails))
+            {
+                UsernamePasswordAuthenticationToken authToken= new UsernamePasswordAuthenticationToken(
+                    userDetails,
+                    null,
+                    userDetails.getAuthorities());
+
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                SecurityContextHolder.getContext().setAuthentication(authToken);
+            }
+
+        }
+        
         filterChain.doFilter(request, response);
     }
 
