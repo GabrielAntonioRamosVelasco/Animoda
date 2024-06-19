@@ -22,12 +22,12 @@ import com.tienda.animoda.Repositories.UsuarioRespository;
 
 @RestController
 @CrossOrigin("http://localhost:5173")
-@RequestMapping("/usuarios")
+@RequestMapping("/auth")
 public class UsuarioController {
 
     @Autowired
     private UsuarioRespository usuarioRepository;
-
+/* 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -47,7 +47,7 @@ public class UsuarioController {
             return "Correo o contraseña incorrectos";
         }
     }
-
+*/
     @GetMapping
     public List<Usuario> getAllUsuarios(){
         return usuarioRepository.findAll();
