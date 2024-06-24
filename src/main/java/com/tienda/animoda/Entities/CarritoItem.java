@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -18,6 +20,7 @@ public class CarritoItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonBackReference // Referencia inversa para evitar recursividad
     @ManyToOne
     @JoinColumn(name = "carrito_id")
     private Carrito carrito;

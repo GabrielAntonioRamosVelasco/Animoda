@@ -10,6 +10,9 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -20,10 +23,12 @@ public class Carrito {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonBackReference // Referencia inversa para evitar recursividad
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 
+    @JsonManagedReference // Referencia gestionada para los items del carrito
     @OneToMany(mappedBy = "carrito", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CarritoItem> items = new HashSet<>();
 
