@@ -7,7 +7,6 @@ import org.springframework.data.repository.query.Param;
 import com.tienda.animoda.Entities.Inventario;
 
 public interface InventarioRepository extends JpaRepository<Inventario, Long> {
- @Query("SELECT i FROM Inventario i WHERE i.nombre LIKE %:keyword% OR i.descripcion LIKE %:keyword%")
+    @Query("SELECT i FROM Inventario i WHERE LOWER(i.nombre) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(i.descripcion) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Inventario> findByKeyword(@Param("keyword") String keyword);
-
 }

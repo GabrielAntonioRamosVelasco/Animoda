@@ -53,7 +53,6 @@ public class InventarioController {
                 .orElseThrow(() -> new RuntimeException("No se encontró el producto con el ID: " + id_producto));
 
         producto.setNombre(productoNuevo.getNombre());
-        producto.setCantidad(productoNuevo.getCantidad());
         producto.setPrecio(productoNuevo.getPrecio());
         producto.setDescripcion(productoNuevo.getDescripcion());
         producto.setImagen(productoNuevo.getImagen());

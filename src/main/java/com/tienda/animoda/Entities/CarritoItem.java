@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Data
 @Builder
@@ -22,11 +23,13 @@ public class CarritoItem {
 
     @JsonBackReference // Referencia inversa para evitar recursividad
     @ManyToOne
-    @JoinColumn(name = "carrito_id")
+   @JoinColumn(name = "carrito_id")
+    @JsonIgnoreProperties("items")  // Ignora la lista de items en carrito
     private Carrito carrito;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
+    @JsonIgnoreProperties("carritoItems")  // Ignora la propiedad 'carritoItems' en product para evitar la recursión
     private Inventario product;
 
     private int quantity;

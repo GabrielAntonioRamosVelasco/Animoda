@@ -11,6 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Data
@@ -28,7 +29,7 @@ public class Carrito {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @JsonManagedReference // Referencia gestionada para los items del carrito
+    @JsonIgnoreProperties("carrito")  // Ignora la propiedad 'carrito' en items para evitar la recursión
     @OneToMany(mappedBy = "carrito", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<CarritoItem> items = new HashSet<>();
 
